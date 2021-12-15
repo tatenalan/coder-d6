@@ -3,6 +3,11 @@
     font-weight: bold;
 }
 
+#email[placeholder] {
+    color: black;
+    font-weight: normal;
+}
+
 #date {
     color: brown;
 }

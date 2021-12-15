@@ -5,6 +5,7 @@ const { Router } = express;
 const handlebars = require('express-handlebars');
 const { Server: HttpServer } = require('http');
 const { Server: IOServer } = require('socket.io');
+const fetch = require('node-fetch');
 
 // Inicializaciones
 const app = express();
@@ -73,7 +74,11 @@ router.delete("/:id", (req, res) => {
 
 // rutas desafío 6
 
-
+const messages = [
+    {email: "taten@taten.com", date: "[12/15/2021, 4:55:01 AM]", data: "buenas!"},
+    {email: "steven@steven.com", date: "[12/15/2021, 4:55:11 AM]", data: "hola!"},
+    {email: "loik@loik.com", date: "[12/15/2021, 4:55:50 AM]", data: "eeey!"}
+]
 
 app.get("/", (req, res) => {
     const products = product.list
@@ -84,11 +89,14 @@ io.on('connection', (socket) => {
 
      // 'connection' se ejecuta la primera vez que se abre una nueva conexión
     console.log('Usuario conectado!')
+    // emitimos los mensajes de nuestra lista de mensajes
+    socket.emit('messages', messages)
 
     socket.on('newProduct', data => {
        console.log('nuevo producto', data);
        product.insert(data)
-       fetch(__dirname + "/")
+    //    const products = product.list 
+    //    fetch("http://localhost:3000/", {products})
        io.sockets.emit('updatedList', product.list);
     })
 
@@ -96,6 +104,9 @@ io.on('connection', (socket) => {
     // chat
 
     socket.on("newMessage", message => {
+        console.log(message);
+        // cuando recibimos un mensaje del front lo guardamos en nuestro array de mensajes para mostrarselo a los nuevos usuarios que ingresen a través del socket "messages"
+        messages.push(message);
         io.sockets.emit("newMessage", message)       
     })
 })

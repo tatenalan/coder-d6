@@ -25,24 +25,45 @@ socket.on("updatedList", productList => {
 
 /////////////// chat /////////////////
 
-socket.on("newMessage", message => {
-    $("#messages").append(
-        `<span id="email">${message.email}</span>
-        <span id="date">${message.date}</span>
-        <span id="data">: ${message.data}</span>
-        <br>`)
+// cuando se conecte un usuario verá la lista de mensajes actual
+socket.on("messages", messages => {
+    console.log(messages);
+    render(messages)
 })
 
-$("#submit-chat").click(sendMessage)
+function render(messages) {
+    messages.forEach(message => {
+        $("#messages").append(
+            `<span id="email">${message.email}</span>
+            <span id="date">${message.date}</span>
+            <span id="data">: ${message.data}</span>
+            <br>`)
+    })
+}
+
+// cuando se envíe un mensaje nuevo se agregará a la lista de mensajes actual
+socket.on("newMessage", message => {
+    // $("#myForm").submit(e => {
+    //     e.preventDefault();
+        $("#messages").append(
+            `<span id="email">${message.email}</span>
+            <span id="date">${message.date}</span>
+            <span id="data">: ${message.data}</span>
+            <br>`)
+    // })
+})
+
+$("#msg").change(sendMessage)
+// $("#submit-chat").click(sendMessage)
 
 function sendMessage() {
-    let message = {
-        email: $("#emailInput")[0].value,
+    const message = {
+        email: $("#email")[0].value,
         date: `[${new Date().toLocaleString()}]`,
-        data: $("#msgInput")[0].value
+        data: $("#msg")[0].value
     }
 
-   $("#msgInput")[0].value = "";
+   $("#msg")[0].value = "";
 
     socket.emit("newMessage", message);
 }
