@@ -1,0 +1,20 @@
+[
+    {
+      "title": "pala",
+      "price": 1200,
+      "thumbnail": "https://cdn2.iconfinder.com/data/icons/construction-tools-44/100/construction_tools-12-512.png",
+      "id": 1
+    },
+    {
+      "title": "escoba",
+      "price": 510,
+      "thumbnail": "https://cdn3.iconfinder.com/data/icons/halloween-36/64/_Broom-512.png",
+      "id": 2
+    },
+    {
+      "title": "serrucho",
+      "price": 1500,
+      "thumbnail": "https://cdn2.iconfinder.com/data/icons/construction-tools-44/100/construction_tools-01-512.png",
+      "id": 3
+    }
+  ]
