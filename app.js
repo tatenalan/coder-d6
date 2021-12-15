@@ -107,6 +107,7 @@ io.on('connection', (socket) => {
         console.log(message);
         // cuando recibimos un mensaje del front lo guardamos en nuestro array de mensajes para mostrarselo a los nuevos usuarios que ingresen a través del socket "messages"
         messages.push(message);
-        io.sockets.emit("newMessage", message)       
+        // Emitimos a todos los clientes
+        io.sockets.emit("messages", [message])       
     })
 })

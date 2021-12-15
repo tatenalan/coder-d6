@@ -1,6 +1,9 @@
 // Inicializamos una constante para poder utilizar los sockets desde el cliente
 const socket = io();
 
+
+/////////////// productos /////////////////
+
 // Emite mensaje al servidor con la hora y el mensaje enviado recibido por el atributo value del input
 function createProduct() {
     const productData =
@@ -23,11 +26,13 @@ socket.on("updatedList", productList => {
 })
 
 
+
+
+
 /////////////// chat /////////////////
 
 // cuando se conecte un usuario verá la lista de mensajes actual
 socket.on("messages", messages => {
-    console.log(messages);
     render(messages)
 })
 
@@ -41,29 +46,15 @@ function render(messages) {
     })
 }
 
-// cuando se envíe un mensaje nuevo se agregará a la lista de mensajes actual
-socket.on("newMessage", message => {
-    // $("#myForm").submit(e => {
-    //     e.preventDefault();
-        $("#messages").append(
-            `<span id="email">${message.email}</span>
-            <span id="date">${message.date}</span>
-            <span id="data">: ${message.data}</span>
-            <br>`)
-    // })
-})
-
-$("#msg").change(sendMessage)
-// $("#submit-chat").click(sendMessage)
-
-function sendMessage() {
+$("#myForm").submit(e => {
+    e.preventDefault();
     const message = {
-        email: $("#email")[0].value,
+        email: $("#email").val(),
         date: `[${new Date().toLocaleString()}]`,
-        data: $("#msg")[0].value
+        data: $("#msg").val()
     }
-
-   $("#msg")[0].value = "";
-
+    
+    $("#msg")[0].value = "";
+    
     socket.emit("newMessage", message);
-}
+});
