@@ -92,12 +92,13 @@ io.on('connection', (socket) => {
     // emitimos los mensajes de nuestra lista de mensajes
     socket.emit('messages', messages)
 
+
+    // products
+
     socket.on('newProduct', data => {
        console.log('nuevo producto', data);
        product.insert(data)
-    //    const products = product.list 
-    //    fetch("http://localhost:3000/", {products})
-       io.sockets.emit('updatedList', product.list);
+       io.sockets.emit('newProduct', data);
     })
 
 

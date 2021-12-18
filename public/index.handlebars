@@ -13,7 +13,7 @@
     <div class="container"> 
         <div class="mr-auto bg-light p-5">
    
-            {{!-- <form> --}}
+            <form id="productForm">
 
                 <h5>Fill the form to create a product</h5>
                 <br>
@@ -32,9 +32,9 @@
                 </div>
                 
                 <br>
-                <button id="submit" class="btn btn-primary">Add product</button>
+                <button id="submit-product" class="btn btn-primary">Add product</button>
 
-            {{!-- </form> --}}
+            </form>
 
             {{!-- {{#if msg}}
                 <div class="alert alert-success" role="alert">
@@ -61,7 +61,7 @@
                     <th scope="col">Thumbnail</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="product-table">
                     {{#each products}}
                       <tr>
                         <th scope="row">{{this.id}}</th>
@@ -81,39 +81,13 @@
 
         </div>
 
-        {{!-- <div class="mr-auto bg-light p-5">
-
-            <h5>Lista hardcodeada</h5>
-            <br>
-
-            <table class="table bg-white">
-                <thead>
-                  <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Thumbnail</th>
-                  </tr>
-                </thead>
-                <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>producto 1</td>
-                        <td>$100</td>
-                        <td>foto 1</td>
-                      </tr>
-                </tbody>
-            </table>
-
-        </div> --}}
-
         <hr>
 
         <div class="mr-auto bg-light p-5">
             <h5 class="primary">Message center</h5>
             <br>
 
-            <form id="myForm">
+            <form id="chatForm">
 
               <input id="email" class="form-control" placeholder="Enter your email" required>
 

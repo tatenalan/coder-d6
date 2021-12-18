@@ -4,22 +4,33 @@ const socket = io();
 
 /////////////// productos /////////////////
 
-// Emite mensaje al servidor con la hora y el mensaje enviado recibido por el atributo value del input
-function createProduct() {
-    const productData =
-    {
+socket.on("newProduct", newProduct => {
+    renderProduct(newProduct)
+})
+
+function renderProduct(newProduct) {
+        $("#product-table").append(
+            `<tr><th scope="row">${newProduct.id}</th>
+                <td>${newProduct.title}</td>
+                <td>$${newProduct.price}</td>
+                <td><img style="width:50px;" src="${newProduct.thumbnail}" alt=""></td>
+            </tr>`)
+}
+
+$("#productForm").submit(e => {
+    e.preventDefault();
+    const productData = {
         title: $("#title")[0].value,
         price: $("#price")[0].value,
         thumbnail: $("#thumbnail")[0].value
     }
-    console.log('nuevo producto', productData);
+ 
+    $("#title")[0].value = "";
+    $("#price")[0].value = "";
+    $("#thumbnail")[0].value = "";
+    
     socket.emit('newProduct', productData)
-}
-
-
-// cuando el valor del input cambia, emitimos
-$("#submit").click(createProduct);
-
+})
 
 socket.on("updatedList", productList => {
     console.log('lista de productos', productList);
@@ -33,10 +44,10 @@ socket.on("updatedList", productList => {
 
 // cuando se conecte un usuario verá la lista de mensajes actual
 socket.on("messages", messages => {
-    render(messages)
+    renderChat(messages)
 })
 
-function render(messages) {
+function renderChat(messages) {
     messages.forEach(message => {
         $("#messages").append(
             `<span id="email">${message.email}</span>
@@ -46,7 +57,7 @@ function render(messages) {
     })
 }
 
-$("#myForm").submit(e => {
+$("#chatForm").submit(e => {
     e.preventDefault();
     const message = {
         email: $("#email").val(),
@@ -57,4 +68,4 @@ $("#myForm").submit(e => {
     $("#msg")[0].value = "";
     
     socket.emit("newMessage", message);
-});
+})
